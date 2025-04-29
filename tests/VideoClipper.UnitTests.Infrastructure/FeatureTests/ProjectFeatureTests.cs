@@ -1,4 +1,8 @@
-﻿using Shouldly;
+﻿using System.Runtime.CompilerServices;
+using Mediator;
+using Microsoft.Extensions.DependencyInjection;
+using Shouldly;
+using VideoClipper.Domain;
 using VideoClipper.Domain.Features;
 using VideoClipper.Domain.Features.ProjectFeatures;
 using VideoClipper.Domain.Features.ProjectFeatures.Results;
@@ -55,5 +59,8 @@ public class ProjectFeatureTests : FeatureTestBase
 
 		var loadedProjects = await feature.GetAllProjectsAsync(CancellationToken.None);
 		loadedProjects.Length.ShouldBe(names.Length);
+		var sender = scenario.ServiceProvider.GetRequiredService<ISender>();
+		var response = await sender.Send(new GetAllProjectsRequest());
+		response.Length.ShouldBe(names.Length);
 	}
 }

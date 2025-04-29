@@ -14,11 +14,12 @@ public abstract class FeatureTestBase : InfrastructureTestBase
 	{
 		var serviceCollection = CreateServiceCollection();
 		var sp = serviceCollection.BuildServiceProvider();
-		return new TestScenario<T>(serviceCollection, sp.GetRequiredService<T>());
+		return new TestScenario<T>(serviceCollection, sp, sp.GetRequiredService<T>());
 	}
 
 	public record class TestScenario<TFeature>(
 		ServiceCollection ServiceCollection,
+		IServiceProvider ServiceProvider,
 		TFeature Feature
 	);
 }

@@ -43,5 +43,5 @@ public class SectionTag
 {
 	public SectionTagId Id { get; set; }
 
-	public string TagName { get; set; }
+	public required string TagName { get; set; }
 }
